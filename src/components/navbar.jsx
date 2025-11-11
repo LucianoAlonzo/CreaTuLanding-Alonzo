@@ -1,18 +1,16 @@
-// src/components/NavBar.jsx
 import React from "react";
-import CartWidget from "./cartwidget";
+import { Link, NavLink } from "react-router-dom";
+import CartWidget from "./CartWidget";
 import logo from "../assets/logo.png";
-
 
 export default function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <a className="navbar-brand d-flex align-items-center" href="/">
-          <img src={logo} alt="UruCel" style={{ height: 50 }} />
-          <span className="ms-2">UruCel</span>
-        </a>
-
+        <Link className="navbar-brand d-flex align-items-center" to="/">
+          <img src={logo} alt="Urucel" style={{ height: 36 }} />
+          <span className="ms-2 fw-bold">Urucel</span>
+        </Link>
 
         <button
           className="navbar-toggler"
@@ -28,9 +26,18 @@ export default function NavBar() {
 
         <div className="collapse navbar-collapse" id="navMenu">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item"><a className="nav-link" href="#inicio">Inicio</a></li>
-            <li className="nav-item"><a className="nav-link" href="#productos">Productos</a></li>
-            <li className="nav-item"><a className="nav-link" href="#contacto">Contacto</a></li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/">Inicio</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/category/smartphones">Smartphones</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/category/accesorios">Accesorios</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/category/ofertas">Ofertas</NavLink>
+            </li>
           </ul>
 
           <div className="d-flex align-items-center">

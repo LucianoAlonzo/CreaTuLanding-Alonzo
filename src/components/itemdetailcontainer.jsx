@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchProductById } from "../services/mockfetch";
+import { getProductById } from "../services/firestoreService";
 import ItemDetail from "../presentational/ItemDetail";
 
 export default function ItemDetailContainer() {
@@ -20,7 +20,7 @@ export default function ItemDetailContainer() {
     setLoading(true);
     setError(null);
 
-    fetchProductById(id)
+    getProductById(id)
       .then(res => setItem(res))
       .catch(() => {
         setItem(null);

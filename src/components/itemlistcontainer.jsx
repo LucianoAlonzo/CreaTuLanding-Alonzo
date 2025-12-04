@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchAllProducts, fetchProductsByCategory } from "../services/mockfetch";
-import ItemList from "../presentational/ItemList";
+import { getAllProducts, getProductsByCategory } from "../services/firestoreService";
+import ItemList from "../presentational/itemlist";
 
 export default function ItemListContainer() {
   const { categoryId } = useParams();
@@ -10,8 +10,8 @@ export default function ItemListContainer() {
 
   useEffect(() => {
     setLoading(true);
-    const promise = categoryId ? fetchProductsByCategory(categoryId) : fetchAllProducts();
-    promise
+    const fetcher = categoryId ? getProductsByCategory(categoryId) : getAllProducts();
+    fetcher
       .then(res => setItems(res))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));

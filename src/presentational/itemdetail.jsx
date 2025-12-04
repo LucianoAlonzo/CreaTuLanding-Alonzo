@@ -1,23 +1,40 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import ItemCount from "../components/itemcount";
+import { useCart } from "../context/cartcontext";
 
 export default function ItemDetail({ item }) {
-  const [cantidad, setCantidad] = useState(1);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
+
+  function handleAdd(qty) {
+    addItem({ id: item.id, title: item.title, price: item.price }, qty);
+    setAdded(true);
+  }
 
   return (
     <div className="container mt-4">
-      <h2>{item.title} <small className="text-muted">({item.category})</small></h2>
+      <h2>{item.title}</h2>
       <p>{item.description}</p>
       <p className="fw-bold">${item.price}</p>
 
-      <div className="d-flex align-items-center gap-3">
-        <div className="input-group" style={{ width: 140 }}>
-          <button className="btn btn-outline-secondary" onClick={() => setCantidad(c => Math.max(1, c - 1))}>-</button>
-          <input className="form-control text-center" value={cantidad} readOnly />
-          <button className="btn btn-outline-secondary" onClick={() => setCantidad(c => c + 1)}>+</button>
-        </div>
+      {item.stock === 0 && (
+        <div className="alert alert-danger">Producto sin stock</div>
+      )}
 
-        <button className="btn btn-success">Agregar {cantidad} al carrito</button>
-      </div>
+      {!added && item.stock > 0 && (
+        <ItemCount stock={item.stock} initial={1} onAdd={handleAdd} />
+      )}
+
+      {added && (
+        <div className="mt-3">
+          <div className="alert alert-success">Producto agregado al carrito</div>
+          {/* Usar Link en vez de <a href> */}
+          <Link to="/cart" className="btn btn-primary">
+            Ir al carrito
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
